@@ -1,5 +1,6 @@
 from functools import reduce
-from random import randint
+from random import random
+from typing import List
 
 
 def constant_function(v: list, c: float = 1.) -> float:
@@ -127,3 +128,11 @@ def timsort(v: list) -> list:
         size *= 2
 
     return v
+
+
+def get_random_matrix(n: int, m: int) -> List[list]:
+    return [[random() for j in range(m)] for i in range(n)]
+
+
+def get_random_vector(n: int) -> list:
+    return [random() for i in range(n)]
