@@ -1,4 +1,5 @@
 from functools import reduce
+from random import randint
 
 
 def constant_function(v: list, c: float = 1.) -> float:
@@ -59,6 +60,70 @@ def quick_sort(v: list) -> list:
     return v
 
 
-if __name__ == '__main__':
-    print(bubble_sort([3, 2, 1]))
-    print(quick_sort([3, 2, 1]))
+def get_minrun(n: int) -> int:
+    r = 0
+    while n >= 64:
+        r |= n & 1
+        n >>= 1
+    res = n + r
+    return res
+
+
+def insertion_sort(v: list, left: int = 0, right: int = None) -> list:
+    if not right:
+        right = len(v)
+    for i in range(left + 1, right):
+        temp = v[i]
+        j = i - 1
+        while j >= left and v[j] > temp:
+            v[j + 1] = v[j]
+            j -= 1
+        v[j + 1] = temp
+
+    return v
+
+
+def merge_runs(v: list, left: int, middle: int, right: int) -> list:
+    len_1, len_2 = middle - left + 1, right - middle
+    left_lst, right_lst = list(), list()
+    for i in range(len_1):
+        left_lst.append(v[left + i])
+    for i in range(len_2):
+        right_lst.append(v[middle + 1 + i])
+
+    i, j, k = 0, 0, left
+    while i < len_1 and j < len_2:
+        if left_lst[i] <= right_lst[j]:
+            v[k] = left_lst[i]
+            i += 1
+        else:
+            v[k] = right_lst[j]
+            j += 1
+        k += 1
+    while i < len_1:
+        v[k] = left_lst[i]
+        k += 1
+        i += 1
+    while j < len_2:
+        v[k] = right_lst[j]
+        k += 1
+        j += 1
+
+    return v
+
+
+def timsort(v: list) -> list:
+    n = len(v)
+    minrun = get_minrun(n)
+
+    for i in range(0, n, minrun):
+        insertion_sort(v, i, min(i + minrun, n))
+    size = minrun
+    while size < n:
+        for left in range(0, n, size * 2):
+            middle = left + size - 1
+            right = min(left + size * 2 - 1, n - 1)
+            merge_runs(v, left, middle, right)
+        size *= 2
+
+    return v
