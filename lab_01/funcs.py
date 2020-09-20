@@ -17,7 +17,7 @@ def naive_poly_function(v: list, x: float = 1.5) -> float:
     return sum([val * pow(x, k) for k, val in enumerate(v)])
 
 
-def gorner_method_function(v: list, x: float = 1.5) -> float:
+def horner_method_function(v: list, x: float = 1.5) -> float:
     return reduce(lambda agg, a: a + x * agg, reversed(v), 0)
 
 
