@@ -130,6 +130,15 @@ def timsort(v: list) -> list:
     return v
 
 
+def prod_matrix(a: List[list], b: List[list]) -> List[list]:
+    c = [[0 for j in range(len(b[0]))] for i in range(len(a))]
+    for i in range(len(a)):
+        for j in range(len(b[0])):
+            for k in range(len(b)):
+                c[i][j] += a[i][k] * b[k][j]
+    return c
+
+
 def get_random_matrix(n: int, m: int) -> List[list]:
     return [[random() for j in range(m)] for i in range(n)]
 
