@@ -133,11 +133,8 @@ def timsort(v: list) -> list:
 
 
 def prod_matrix(a: List[list], b: List[list]) -> List[list]:
-    c = [[0 for j in range(len(b[0]))] for i in range(len(a))]
-    for i in range(len(a)):
-        for j in range(len(b[0])):
-            for k in range(len(b)):
-                c[i][j] += a[i][k] * b[k][j]
+    c = [[sum(x * y for x, y in zip(a_row, b_col)) for b_col in zip(*b)] for a_row in a]
+
     return c
 
 
