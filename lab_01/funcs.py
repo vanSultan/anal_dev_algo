@@ -1,5 +1,4 @@
 from functools import reduce
-from random import random
 from typing import List
 
 
@@ -24,12 +23,13 @@ def horner_method_function(v: list, x: float = 1.5) -> float:
 
 
 def bubble_sort(v: list) -> list:
-    for i in range(len(v) - 1):
-        for j in range(len(v) - i - 1):
-            if v[j] > v[j + 1]:
-                v[j], v[j + 1] = v[j + 1], v[j]
+    sort_v = v.copy()
+    for i in range(len(sort_v) - 1):
+        for j in range(len(sort_v) - i - 1):
+            if sort_v[j] > sort_v[j + 1]:
+                sort_v[j], sort_v[j + 1] = sort_v[j + 1], sort_v[j]
 
-    return v
+    return sort_v
 
 
 def quick_sort(v: list) -> list:
@@ -57,8 +57,9 @@ def quick_sort(v: list) -> list:
         quick_sort_routine(lst, lw, j - 1)
         quick_sort_routine(lst, j + 1, hg)
 
-    quick_sort_routine(v, 0, len(v) - 1)
-    return v
+    sort_v = v.copy()
+    quick_sort_routine(sort_v, 0, len(sort_v) - 1)
+    return sort_v
 
 
 def get_minrun(n: int) -> int:
@@ -114,20 +115,21 @@ def merge_runs(v: list, left: int, middle: int, right: int) -> list:
 
 
 def timsort(v: list) -> list:
-    n = len(v)
+    sort_v = v.copy()
+    n = len(sort_v)
     minrun = get_minrun(n)
 
     for i in range(0, n, minrun):
-        insertion_sort(v, i, min(i + minrun, n))
+        insertion_sort(sort_v, i, min(i + minrun, n))
     size = minrun
     while size < n:
         for left in range(0, n, size * 2):
             middle = left + size - 1
             right = min(left + size * 2 - 1, n - 1)
-            merge_runs(v, left, middle, right)
+            merge_runs(sort_v, left, middle, right)
         size *= 2
 
-    return v
+    return sort_v
 
 
 def prod_matrix(a: List[list], b: List[list]) -> List[list]:
