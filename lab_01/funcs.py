@@ -138,9 +138,26 @@ def prod_matrix(a: List[list], b: List[list]) -> List[list]:
     return c
 
 
-def get_random_matrix(n: int, m: int) -> List[list]:
-    return [[random() for j in range(m)] for i in range(n)]
+def vinograd_mod(a: List[list], b: List[list]) -> List[list]:
+    m, n, q = len(a), len(b), len(b[0])
+    mul_h, mul_v = [0] * m, [0] * q
+    c = [[0 for j in range(len(b[0]))] for i in range(len(a))]
 
+    for i in range(m):
+        for j in range(0, n - 1, 2):
+            mul_h[i] += a[i][j] * a[i][j + 1]
 
-def get_random_vector(n: int) -> list:
-    return [random() for i in range(n)]
+    for i in range(q):
+        for j in range(0, n - 1, 2):
+            mul_v[i] += b[j][i] * b[j + 1][i]
+
+    for i in range(m):
+        for j in range(q):
+            c[i][j] = -(mul_h[i] + mul_v[j])
+
+            for k in range(0, n - 1, 2):
+                c[i][j] += (a[i][k] + b[k + 1][j]) * (a[i][k + 1] + b[k][j])
+
+            c[i][j] += a[i][n - 1] * b[n - 1][j] if n % 2 else 0
+
+    return c
