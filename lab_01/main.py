@@ -6,12 +6,11 @@ from timeit import timeit
 from typing import List
 
 import pandas as pd
-from scipy.signal import cspline1d
 from matplotlib import pyplot as plt
-from numpy import polyfit, ndarray, asarray
+from numpy import asarray
+from scipy.signal import cspline1d
 
 import lab_01
-
 
 seed()
 
@@ -22,7 +21,7 @@ def get_argparser():
     parser.add_argument("-s", "--skip_methods", nargs="*", type=str, help="List of ignored methods",
                         choices=lab_01.__all__, default=["prod_matrix", "vinograd_mod"])
     parser.add_argument("-n", type=int, help="Max vector size", default=2000)
-    parser.add_argument("-sd", "--step_dump", type=int, help="Step of dump", default=100)
+    parser.add_argument("-sd", "--step_dump", type=int, help="Step of dump", default=200)
     parser.add_argument("-sr", "--step_run", type=int, help="Step of run", default=1)
     return parser.parse_args()
 
@@ -80,14 +79,19 @@ if __name__ == '__main__':
 
             df.loc[i] = row
 
-            if i % step_dump == 0 or i + step_run > n:
+            if i % step_dump == 0:
                 print(f"save dump: n = {i}")
                 df.to_csv(f"dumps/{datetime.now().strftime('%Y%m%d')}_{i}.csv", sep=";")
 
+        print(f"save dump: n = {n}")
+        df.to_csv(f"dumps/{datetime.now().strftime('%Y%m%d')}_{n}.csv", sep=";")
+
     fig, ax = plt.subplots(3, 3)
-    df.fillna(method='pad')
+    df = df.fillna(method='ffill')
     df.plot(subplots=True, ax=ax, grid=True, title="Time complexity", color="m")
-    # ax[2, 2].plot(polyfit(df[df.columns[8]], df.index, 19), df[df.columns[8]], color="c")
-    ax[1, 0].plot(df.index, cspline1d(asarray(df[df.columns[3]].to_list()), 100), color="c")
+    for i in range(len(df.columns)):
+        ax[i // 3, i % 3].plot(df.index, cspline1d(asarray(df[df.columns[i]].to_list()), n**2),
+                               label="approximated line", color="c")
+        ax[i // 3, i % 3].legend()
     plt.subplots_adjust(0.075, 0.1, 0.95, 0.95)
     plt.show()
