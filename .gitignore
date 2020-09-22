@@ -1,5 +1,8 @@
-# PyCharm
+# lab_01
+lab_01/dumps/
 
+# PyCharm
+.run/
 .idea/
 
 # Byte-compiled / optimized / DLL files
