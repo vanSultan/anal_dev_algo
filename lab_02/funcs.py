@@ -1,7 +1,8 @@
 from math import sin
-from random import random, normalvariate
+from random import random, normalvariate, seed
 from typing import Callable, Tuple, List
 
+from vector_2d import Vector
 from matplotlib import pyplot as plt
 
 
@@ -124,7 +125,6 @@ def exhaustive_search_2d(
             if f_min is None or f_cur < f_min:
                 x_min, y_min, f_min = x, y, f_cur
             y += eps
-            i += 1
         x += eps
 
     return (x_min, y_min), f_min
@@ -134,32 +134,114 @@ def gauss_method(
         fun: Callable[[type_approx_func, type_signal, float, float], float], fun_sub: type_approx_func,
         signal: type_signal, limits: Tuple[Tuple[float, float], Tuple[float, float]], eps: float = 1e-3
 ) -> Tuple[Tuple[float, float], float]:
-    init_ap = list(limits[0])
-    vec_min, f_min = init_ap.copy(), None
-    k = 0
+    vec_par, f_min, f_min_prev = list(limits[0]), None, None
+    k, cnt_par = 0, len(vec_par)
     while True:
-        while init_ap[k] <= limits[1][k]:
-            f_cur = fun(fun_sub, signal, *init_ap)
+        vec_cur = vec_par.copy()
+        vec_cur[k] = limits[0][k]
+        while vec_cur[k] <= limits[1][k]:
+            f_cur = fun(fun_sub, signal, *vec_cur)
             if f_min is None or f_cur < f_min:
-                vec_min[k], f_min = init_ap[k], f_cur
-            init_ap[k] += eps
-        init_ap[k] = limits[0][k]
-        k = (k + 1) % len(init_ap)
+                vec_par[k], f_min = vec_cur[k], f_cur
+            vec_cur[k] += eps
+        k = (k + 1) % cnt_par
+        if f_min_prev is None or abs(f_min - f_min_prev) > eps:
+            f_min_prev = f_min
+        else:
+            break
+
+    return (vec_par[0], vec_par[1]), f_min
+
+
+def nelder_mead(
+        fun: Callable[[type_approx_func, type_signal, float, float], float], fun_sub: type_approx_func,
+        signal: type_signal, limits: Tuple[Tuple[float, float], Tuple[float, float]], eps: float = 1e-3,
+        alpha: float = 1., beta: float = 0.5, gamma: float = 2.
+) -> Tuple[Tuple[float, float], float]:
+    v_1, v_2, v_3 = Vector(0., 0.), Vector(1., 0.), Vector(0., 1.)
+    f_min = None
+    while True:
+        dic = {
+            v_1: fun(fun_sub, signal, *v_1.get_comps()),
+            v_2: fun(fun_sub, signal, *v_2.get_comps()),
+            v_3: fun(fun_sub, signal, *v_3.get_comps())
+        }
+        p_lst = list(map(lambda el: el[0], sorted(dic.items(), key=lambda el: el[1])))
+
+        middle = (p_lst[0] + p_lst[1]) / 2
+        xr = middle + alpha * (middle - p_lst[2])
+        f_xr = fun(fun_sub, signal, *xr.get_comps())
+        if f_xr < dic[p_lst[1]]:
+            p_lst[2] = xr
+        else:
+            if f_xr < dic[p_lst[2]]:
+                p_lst[2] = xr
+                dic[xr] = f_xr
+            c = (p_lst[2] + middle) / 2
+            f_c = fun(fun_sub, signal, *c.get_comps())
+            if f_c < dic[p_lst[2]]:
+                p_lst[2] = c
+                dic[c] = f_c
+        if f_xr < dic[p_lst[0]]:
+            xe = middle + gamma * (xr - middle)
+            f_xe = fun(fun_sub, signal, *xe.get_comps())
+            if f_xe < f_xr:
+                p_lst[2] = xe
+                dic[xe] = f_xe
+            else:
+                p_lst[2] = xr
+                dic[xr] = f_xr
+        if f_xr > dic[p_lst[1]]:
+            xc = middle + beta * (p_lst[2] - middle)
+            f_xc = fun(fun_sub, signal, *xc.get_comps())
+            if f_xc < dic[p_lst[2]]:
+                p_lst[2] = xc
+                dic[xc] = f_xc
+
+        v_1, v_2, v_3 = p_lst[2], p_lst[1], p_lst[0]
+
+        if f_min is None or abs(f_min - dic[v_3]) > eps:
+            f_min = dic[v_3]
+        else:
+            break
+    return v_3.get_comps(), dic[v_3]
 
 
 if __name__ == '__main__':
+    seed()
     s = get_signal()
     xx = list(map(lambda i: i[0], s))
     yy = list(map(lambda i: i[1], s))
+
+    fig, ax = plt.subplots(2, 1)
+
+    ax[0].scatter(xx, yy, color="deeppink")
+    ax[1].scatter(xx, yy, color="deeppink")
+
     lim = ((min(xx), min(yy)), (max(xx), max(yy)))
+    # lim = ((0., -0.5), (1., 0.5))
     print(lim)
+
     c_1, _ = exhaustive_search_2d(least_squares, linear_approx, s, lim)
     print(c_1)
-    c_2, _ = exhaustive_search_2d(least_squares, rational_approx, s, lim)
+    c_2, _ = gauss_method(least_squares, linear_approx, s, lim)
     print(c_2)
-    plt.scatter(xx, yy, color="deeppink")
-    plt.plot(xx, [linear_approx(k, c_1[0], c_1[1]) for k in xx], color="c")
-    plt.plot(xx, [rational_approx(k, c_2[0], c_2[1]) for k in xx], color="m")
+    c_3, _ = nelder_mead(least_squares, linear_approx, s, lim)
+    print(c_3)
+    ax[0].plot(xx, [linear_approx(k, c_1[0], c_1[1]) for k in xx], color="c")
+    ax[0].plot(xx, [linear_approx(k, c_2[0], c_2[1]) for k in xx], color="m")
+    ax[0].plot(xx, [linear_approx(k, c_3[0], c_3[1]) for k in xx], color="r")
+
+    c_4, _ = exhaustive_search_2d(least_squares, rational_approx, s, lim)
+    print(c_4)
+    c_5, _ = gauss_method(least_squares, rational_approx, s, lim)
+    print(c_5)
+    c_6, _ = nelder_mead(least_squares, rational_approx, s, lim)
+    print(c_6)
+    ax[1].plot(xx, [rational_approx(k, c_4[0], c_4[1]) for k in xx], color="c")
+    ax[1].plot(xx, [rational_approx(k, c_5[0], c_5[1]) for k in xx], color="m")
+    ax[1].plot(xx, [rational_approx(k, c_6[0], c_6[1]) for k in xx], color="r")
+
     plt.show()
     # ep = 1e-3
     #
