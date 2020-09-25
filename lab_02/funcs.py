@@ -1,9 +1,8 @@
 from math import sin
-from random import random, normalvariate, seed
+from random import random, normalvariate
 from typing import Callable, Tuple, List
 
 from vector_2d import Vector
-from matplotlib import pyplot as plt
 
 
 def function_1(x: float) -> float:
@@ -32,7 +31,7 @@ def exhaustive_search(fun: Callable[[float], float], limits: Tuple[float, float]
         x += eps
 
     n = round((limits[1] - limits[0]) / eps)
-    print(f"Cnt of fun eval: {n}\nCnt of iter: {n}")
+    print(f"Cnt of func eval: {n}\nCnt of iteration: {n}")
 
     return x_min, f_min
 
@@ -54,7 +53,7 @@ def dichotomy_method(fun: Callable[[float], float], limits: Tuple[float, float],
         iter_cnt, fun_call_cnt = iter_cnt + 1, fun_call_cnt + 2
     x_min = (x_1 + x_2) / 2
 
-    print(f"Cnt of fun eval: {fun_call_cnt}\nCnt of iter: {iter_cnt}")
+    print(f"Cnt of func eval: {fun_call_cnt}\nCnt of iteration: {iter_cnt}")
 
     return x_min, fun(x_min)
 
@@ -83,7 +82,7 @@ def golden_section(fun: Callable[[float], float], limits: Tuple[float, float],
         iter_cnt, fun_call_cnt = iter_cnt + 1, fun_call_cnt + 1
     x_min = (a + b) / 2
 
-    print(f"Cnt of fun eval: {fun_call_cnt}\nCnt of iter: {iter_cnt}")
+    print(f"Cnt of func eval: {fun_call_cnt}\nCnt of iteration: {iter_cnt}")
 
     return x_min, fun(x_min)
 
@@ -118,6 +117,7 @@ def exhaustive_search_2d(
 ) -> Tuple[Tuple[float, float], float]:
     x = limits[0][0]
     x_min, y_min, f_min = None, None, None
+    iter_cnt, fun_call_cnt = 0, 0
     while x <= limits[1][0]:
         y = limits[0][1]
         while y <= limits[1][1]:
@@ -125,7 +125,10 @@ def exhaustive_search_2d(
             if f_min is None or f_cur < f_min:
                 x_min, y_min, f_min = x, y, f_cur
             y += eps
+            iter_cnt, fun_call_cnt = iter_cnt + 1, fun_call_cnt + 1
         x += eps
+
+    print(f"Cnt of func eval: {fun_call_cnt}\nCnt of iteration: {iter_cnt}")
 
     return (x_min, y_min), f_min
 
@@ -136,6 +139,7 @@ def gauss_method(
 ) -> Tuple[Tuple[float, float], float]:
     vec_par, f_min, f_min_prev = list(limits[0]), None, None
     k, cnt_par = 0, len(vec_par)
+    iter_cnt, fun_call_cnt = 0, 0
     while True:
         vec_cur = vec_par.copy()
         vec_cur[k] = limits[0][k]
@@ -144,22 +148,25 @@ def gauss_method(
             if f_min is None or f_cur < f_min:
                 vec_par[k], f_min = vec_cur[k], f_cur
             vec_cur[k] += eps
+            iter_cnt, fun_call_cnt = iter_cnt + 1, fun_call_cnt + 1
         k = (k + 1) % cnt_par
         if f_min_prev is None or abs(f_min - f_min_prev) > eps:
             f_min_prev = f_min
         else:
             break
 
+    print(f"Cnt of func eval: {fun_call_cnt}\nCnt of iteration: {iter_cnt}")
+
     return (vec_par[0], vec_par[1]), f_min
 
 
 def nelder_mead(
         fun: Callable[[type_approx_func, type_signal, float, float], float], fun_sub: type_approx_func,
-        signal: type_signal, limits: Tuple[Tuple[float, float], Tuple[float, float]], eps: float = 1e-3,
-        alpha: float = 1., beta: float = 0.5, gamma: float = 2.
+        signal: type_signal, eps: float = 1e-3, alpha: float = 0.9, beta: float = 0.5, gamma: float = 2.1
 ) -> Tuple[Tuple[float, float], float]:
-    v_1, v_2, v_3 = Vector(0., 0.), Vector(1., 0.), Vector(0., 1.)
+    v_1, v_2, v_3 = Vector(0., 0.), Vector(0., 1.), Vector(1., 0.)
     f_min = None
+    iter_cnt, fun_call_cnt = 0, 0
     while True:
         dic = {
             v_1: fun(fun_sub, signal, *v_1.get_comps()),
@@ -167,10 +174,12 @@ def nelder_mead(
             v_3: fun(fun_sub, signal, *v_3.get_comps())
         }
         p_lst = list(map(lambda el: el[0], sorted(dic.items(), key=lambda el: el[1])))
+        fun_call_cnt += 3
 
         middle = (p_lst[0] + p_lst[1]) / 2
         xr = middle + alpha * (middle - p_lst[2])
         f_xr = fun(fun_sub, signal, *xr.get_comps())
+        fun_call_cnt += 1
         if f_xr < dic[p_lst[1]]:
             p_lst[2] = xr
         else:
@@ -179,12 +188,14 @@ def nelder_mead(
                 dic[xr] = f_xr
             c = (p_lst[2] + middle) / 2
             f_c = fun(fun_sub, signal, *c.get_comps())
+            fun_call_cnt += 1
             if f_c < dic[p_lst[2]]:
                 p_lst[2] = c
                 dic[c] = f_c
         if f_xr < dic[p_lst[0]]:
             xe = middle + gamma * (xr - middle)
             f_xe = fun(fun_sub, signal, *xe.get_comps())
+            fun_call_cnt += 1
             if f_xe < f_xr:
                 p_lst[2] = xe
                 dic[xe] = f_xe
@@ -194,14 +205,19 @@ def nelder_mead(
         if f_xr > dic[p_lst[1]]:
             xc = middle + beta * (p_lst[2] - middle)
             f_xc = fun(fun_sub, signal, *xc.get_comps())
+            fun_call_cnt += 1
             if f_xc < dic[p_lst[2]]:
                 p_lst[2] = xc
                 dic[xc] = f_xc
 
         v_1, v_2, v_3 = p_lst[2], p_lst[1], p_lst[0]
+        iter_cnt += 1
 
         if f_min is None or abs(f_min - dic[v_3]) > eps:
             f_min = dic[v_3]
         else:
             break
+
+    print(f"Cnt of func eval: {fun_call_cnt}\nCnt of iteration: {iter_cnt}")
+
     return v_3.get_comps(), dic[v_3]
