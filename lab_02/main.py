@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
         print(titles[i])
         coefficients_1, f_1 = exhaustive_search_2d(least_squares, funcs[i], signal, limits)
-        print(f"exhaustive_search_2d ((a, b), f): ({coefficients_1[0]:.3f}, {coefficients_1[1]:.3f}), {1_2}")
+        print(f"exhaustive_search_2d ((a, b), f): ({coefficients_1[0]:.3f}, {coefficients_1[1]:.3f}), {f_2}")
         ax[i].plot(x, [funcs[i](j, coefficients_1[0], coefficients_1[1]) for j in x],
                    color="c", label="exhaustive_search_2d")
         coefficients_2, f_2 = gauss_method(least_squares, funcs[i], signal, limits)
