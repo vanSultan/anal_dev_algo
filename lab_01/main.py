@@ -1,19 +1,23 @@
 import argparse
 import os
 from datetime import datetime
+from functools import reduce
 from random import random, seed
 from timeit import timeit
 from typing import List
 
 import pandas as pd
 from matplotlib import pyplot as plt
-from numpy import asarray
-from scipy.signal import cspline1d
+from numpy import polyfit
 
 import lab_01
 
 seed()
 
+
+def poly(coefficients: list, x: float) -> float:
+    return reduce(lambda agg, a: agg + a[1] * pow(x, a[0]), enumerate(reversed(coefficients)), 0)
+  
 
 def get_argparser():
     parser = argparse.ArgumentParser(prog="lab_01")
@@ -86,12 +90,21 @@ if __name__ == '__main__':
         print(f"save dump: n = {n}")
         df.to_csv(f"dumps/{datetime.now().strftime('%Y%m%d')}_{n}.csv", sep=";")
 
-    fig, ax = plt.subplots(3, 3)
+    poly_power = {
+        "constant_function": 0, "sum_function": 1, "prod_function": 1,
+        "naive_poly_function": 1, "horner_method_function": 1,
+        "bubble_sort": 2, "quick_sort": 1, "timsort": 1,
+        "matmul": 2
+    }
+
     df = df.fillna(method='ffill')
-    df.plot(subplots=True, ax=ax, grid=True, title="Time complexity", color="m")
-    for i in range(len(df.columns)):
-        ax[i // 3, i % 3].plot(df.index, cspline1d(asarray(df[df.columns[i]].to_list()), n**2),
-                               label="approximated line", color="c")
-        ax[i // 3, i % 3].legend()
-    plt.subplots_adjust(0.075, 0.1, 0.95, 0.95)
-    plt.show()
+    for col_name in df.columns:
+        cof = polyfit(df.index, df[col_name], poly_power[col_name])
+        plt.plot(df.index, df[col_name], label="noisy signal", color="m")
+        plt.plot(df.index, [poly(list(cof), x) for x in df.index], label="approximated line", color="c")
+        plt.title(col_name)
+        plt.xlabel("len of vector")
+        plt.ylabel("time, s")
+        plt.grid(True)
+        plt.legend()
+        plt.show()
