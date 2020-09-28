@@ -8,9 +8,7 @@ from typing import List
 
 import pandas as pd
 from matplotlib import pyplot as plt
-from numpy import asarray, polyfit, log
-from scipy.optimize import curve_fit, least_squares
-from scipy.signal import cspline1d
+from numpy import polyfit
 
 import lab_01
 
@@ -18,13 +16,7 @@ seed()
 
 
 def poly(coefficients: list, x: float) -> float:
-    len_c = len(coefficients) - 1
-    # r = 0
-    # for i in range(len(coefficients)):
-    #     r += pow(x, len_c - i) * coefficients[i]
-    # return r
     return reduce(lambda agg, a: agg + a[1] * pow(x, a[0]), enumerate(reversed(coefficients)), 0)
-# return reduce(lambda agg, a: a + x * agg, reversed(v), 0)
 
 
 def get_argparser():
@@ -105,15 +97,7 @@ if __name__ == '__main__':
         "matmul": 2
     }
 
-    # fig, ax = plt.subplots(3, 3)
     df = df.fillna(method='ffill')
-    # df.plot(subplots=True, ax=ax, grid=True, title="Time complexity", color="m")
-    # for i in range(len(df.columns)):
-    #     cof = polyfit(df.index, df[df.columns[i]], poly_power[df.columns[i]])
-    #     ax[i // 3, i % 3].plot(df.index, [poly(list(cof), x) for x in df.index],
-    #                            label="approximated line", color="c")
-    #     ax[i // 3, i % 3].legend()
-    # plt.subplots_adjust(0.075, 0.1, 0.95, 0.95)
     for col_name in df.columns:
         cof = polyfit(df.index, df[col_name], poly_power[col_name])
         plt.plot(df.index, df[col_name], label="noisy signal", color="m")
