@@ -17,7 +17,7 @@ seed()
 
 def poly(coefficients: list, x: float) -> float:
     return reduce(lambda agg, a: agg + a[1] * pow(x, a[0]), enumerate(reversed(coefficients)), 0)
-
+  
 
 def get_argparser():
     parser = argparse.ArgumentParser(prog="lab_01")
