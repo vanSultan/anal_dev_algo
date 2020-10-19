@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt]{report} % размер бумаги устанавливаем А4, шрифт 12 пунктов
 \usepackage[T2A]{fontenc} % поддержка кириллицы в ЛаТеХ
-\usepackage[cp1251]{inputenc} % настройка кодировки
+\usepackage[utf8]{inputenc} % настройка кодировки
 \usepackage[english,russian]{babel} % Определение языков в документе
 \usepackage{amssymb,amsfonts,amsmath,mathtext,cite,enumerate,float} % подключаем нужные пакеты расширений
 \usepackage{indentfirst} % делать отступ в начале параграфа
@@ -33,7 +33,10 @@
 \usepackage{xcolor}
 \usepackage{listings} %% собственно, это и есть пакет listings
 
-\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{enumitem}
+
 \DeclareCaptionFont{white}{\color{white}} %% это сделает текст заголовка белым
 %% код ниже нарисует серую рамочку вокруг заголовка кода.
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
@@ -71,8 +74,7 @@ escapeinside={\%*}{*)} % если нужно добавить комментарии в коде
 % \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.}
 \renewcommand{\thesubsubsection}{\arabic{subsection}.\arabic{subsubsection}.}
 
-\usepackage{hyperref}
-\usepackage{multirow}
+\newtheorem{theorem}{Theorem}
 
 \begin{document}
 \def\figurename{Figure} % префикс к рисунками

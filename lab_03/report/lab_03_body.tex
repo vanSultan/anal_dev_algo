@@ -6,7 +6,7 @@ The use of first- and second-order methods (Gradient Descent, Conjugate Gradient
 \subsection{Formulation of the problem}\label{subsec:formulation-of-the-problem}
 
 Generate random numbers $\alpha \in (0, 1)$ and $\beta \in (0, 1)$.
-Furthermore, generate the noisy data $\{x_k, y_k\}$, where $k = 0, ..., 100$, according to the following rule:
+Furthermore, generate the noisy data $\{x_k, y_k\}$, where $k = 0, \dots, 100$, according to the following rule:
 
 \begin{equation}
     y_k = \alpha x_k + \beta + \delta_k, x_k = \frac{k}{100},
@@ -107,10 +107,25 @@ From the tables below (Tables~\ref{tbl:direct},~\ref{tbl:order}), we can conclud
 \label{tbl:order}
 \end{table}
 
+\paragraph{Newton's method gives a different result}
+
+\begin{theorem}
+    \label{theorem:conv_newton}
+    For doubly continuously differentiable functions (i.e.\ for $f \in C^2(D)$) with a non-degenerate matrix $\nabla^2 f(y^*)$, there exists a $\varepsilon$-neighborhood of the stationary point $y^*$ of the function $f(y)$ such that for any initial point $y^0$ from this neighborhood, the Newton method will converge superlinearly, and if the Lipschitz condition is met in this neighborhood for Hesse matrices, it will converge quadratically.
+\end{theorem}
+
+If we consider the Newton method in more detail, then we can conclude from the theorem above [1]: if the Hesse matrix is not degenerate, but not sign-positive, then the Newton method can converge to a stationary point that is not a minimum point, but a maximum point or a saddle point.
+Accordingly, a more careful choice of initial approximations is necessary.
+
 \subsection{Conclusion}\label{subsec:conclusion}
 
 In the course of the laboratory work,  first- and second-order methods were implemented and analyzed within the problem of the unconstrained optimization problem.
 This paper also provides a comparative analysis of direct optimization methods and first-and second-order methods.
+
+\subsection{References}\label{subsec:references}
+\begin{enumerate}[label={[\arabic*]}]
+    \item С.Ю. Городецкий, Лабораторный практикум по методам локальной оптимизации в программной системе LocOpt, 2007.
+\end{enumerate}
 
 \subsection{Appendix}\label{subsec:appendix}
 
