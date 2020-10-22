@@ -1,63 +1,66 @@
-\documentclass[a4paper,12pt]{report} % размер бумаги устанавливаем А4, шрифт 12 пунктов
-\usepackage[T2A]{fontenc} % поддержка кириллицы в ЛаТеХ
-\usepackage[cp1251]{inputenc} % настройка кодировки
-\usepackage[english,russian]{babel} % Определение языков в документе
-\usepackage{amssymb,amsfonts,amsmath,mathtext,cite,enumerate,float} % подключаем нужные пакеты расширений
-\usepackage{indentfirst} % делать отступ в начале параграфа
-\usepackage{tabularx} % продвинутые таблицы
-% \usepackage{showkeys} % раскомментировать, чтобы в документе были видны ссылки на литературу, рисунки и таблицы
-\usepackage[labelsep=period]{caption} % заменить умолчальное разделение ':' на '.' в подписях к рисункам и таблицам
-\usepackage[onehalfspacing]{setspace} % "умное" расстояние между строк - установить 1.5 интервала от нормального
-\usepackage[final]{graphicx} % разрешить включение PostScript-графики
-\graphicspath{{img/}} % Относительный путь к каталогу с рисунками
+\documentclass[a4paper,12pt]{report} % СЂР°Р·РјРµСЂ Р±СѓРјР°РіРё СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Рђ4, С€СЂРёС„С‚ 12 РїСѓРЅРєС‚РѕРІ
+\usepackage[T2A]{fontenc} % РїРѕРґРґРµСЂР¶РєР° РєРёСЂРёР»Р»РёС†С‹ РІ Р›Р°РўРµРҐ
+\usepackage[utf8]{inputenc} % РЅР°СЃС‚СЂРѕР№РєР° РєРѕРґРёСЂРѕРІРєРё
+\usepackage[english,russian]{babel} % РћРїСЂРµРґРµР»РµРЅРёРµ СЏР·С‹РєРѕРІ РІ РґРѕРєСѓРјРµРЅС‚Рµ
+\usepackage{amssymb,amsfonts,amsmath,mathtext,cite,enumerate,float} % РїРѕРґРєР»СЋС‡Р°РµРј РЅСѓР¶РЅС‹Рµ РїР°РєРµС‚С‹ СЂР°СЃС€РёСЂРµРЅРёР№
+\usepackage{indentfirst} % РґРµР»Р°С‚СЊ РѕС‚СЃС‚СѓРї РІ РЅР°С‡Р°Р»Рµ РїР°СЂР°РіСЂР°С„Р°
+\usepackage{tabularx} % РїСЂРѕРґРІРёРЅСѓС‚С‹Рµ С‚Р°Р±Р»РёС†С‹
+% \usepackage{showkeys} % СЂР°СЃРєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ, С‡С‚РѕР±С‹ РІ РґРѕРєСѓРјРµРЅС‚Рµ Р±С‹Р»Рё РІРёРґРЅС‹ СЃСЃС‹Р»РєРё РЅР° Р»РёС‚РµСЂР°С‚СѓСЂСѓ, СЂРёСЃСѓРЅРєРё Рё С‚Р°Р±Р»РёС†С‹
+\usepackage[labelsep=period]{caption} % Р·Р°РјРµРЅРёС‚СЊ СѓРјРѕР»С‡Р°Р»СЊРЅРѕРµ СЂР°Р·РґРµР»РµРЅРёРµ ':' РЅР° '.' РІ РїРѕРґРїРёСЃСЏС… Рє СЂРёСЃСѓРЅРєР°Рј Рё С‚Р°Р±Р»РёС†Р°Рј
+\usepackage[onehalfspacing]{setspace} % "СѓРјРЅРѕРµ" СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ СЃС‚СЂРѕРє - СѓСЃС‚Р°РЅРѕРІРёС‚СЊ 1.5 РёРЅС‚РµСЂРІР°Р»Р° РѕС‚ РЅРѕСЂРјР°Р»СЊРЅРѕРіРѕ
+\usepackage[final]{graphicx} % СЂР°Р·СЂРµС€РёС‚СЊ РІРєР»СЋС‡РµРЅРёРµ PostScript-РіСЂР°С„РёРєРё
+\graphicspath{{img/}} % РћС‚РЅРѕСЃРёС‚РµР»СЊРЅС‹Р№ РїСѓС‚СЊ Рє РєР°С‚Р°Р»РѕРіСѓ СЃ СЂРёСЃСѓРЅРєР°РјРё
 
 \usepackage{textcomp}
 \newcommand*{\No}{\textnumero}
 
 \makeatletter
-\bibliographystyle{unstr} % Стиль библиографических ссылок БибТеХа - нумеровать в порядке упоминания в тексте
-\renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку в списке литературы
+\bibliographystyle{unstr} % РЎС‚РёР»СЊ Р±РёР±Р»РёРѕРіСЂР°С„РёС‡РµСЃРєРёС… СЃСЃС‹Р»РѕРє Р‘РёР±РўРµРҐР° - РЅСѓРјРµСЂРѕРІР°С‚СЊ РІ РїРѕСЂСЏРґРєРµ СѓРїРѕРјРёРЅР°РЅРёСЏ РІ С‚РµРєСЃС‚Рµ
+\renewcommand{\@biblabel}[1]{#1.} % Р—Р°РјРµРЅСЏРµРј Р±РёР±Р»РёРѕРіСЂР°С„РёСЋ СЃ РєРІР°РґСЂР°С‚РЅС‹С… СЃРєРѕР±РѕРє РЅР° С‚РѕС‡РєСѓ РІ СЃРїРёСЃРєРµ Р»РёС‚РµСЂР°С‚СѓСЂС‹
 \makeatother
 
-\def\labelitemi{--} % установка префикса немаркированного списка
+\def\labelitemi{--} % СѓСЃС‚Р°РЅРѕРІРєР° РїСЂРµС„РёРєСЃР° РЅРµРјР°СЂРєРёСЂРѕРІР°РЅРЅРѕРіРѕ СЃРїРёСЃРєР°
 
-% Настройка геометрии
+% РќР°СЃС‚СЂРѕР№РєР° РіРµРѕРјРµС‚СЂРёРё
 \usepackage{geometry}
 \geometry{left=2cm}
 \geometry{right=1.5cm}
 \geometry{top=1cm}
 \geometry{bottom=2cm}
 
-% настройка листинга
-\usepackage{color} %% это для отображения цвета в коде
+% РЅР°СЃС‚СЂРѕР№РєР° Р»РёСЃС‚РёРЅРіР°
+\usepackage{color} %% СЌС‚Рѕ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р° РІ РєРѕРґРµ
 \usepackage{xcolor}
-\usepackage{listings} %% собственно, это и есть пакет listings
+\usepackage{listings} %% СЃРѕР±СЃС‚РІРµРЅРЅРѕ, СЌС‚Рѕ Рё РµСЃС‚СЊ РїР°РєРµС‚ listings
 
-\usepackage{caption}
-\DeclareCaptionFont{white}{\color{white}} %% это сделает текст заголовка белым
-%% код ниже нарисует серую рамочку вокруг заголовка кода.
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{enumitem}
+
+\DeclareCaptionFont{white}{\color{white}} %% СЌС‚Рѕ СЃРґРµР»Р°РµС‚ С‚РµРєСЃС‚ Р·Р°РіРѕР»РѕРІРєР° Р±РµР»С‹Рј
+%% РєРѕРґ РЅРёР¶Рµ РЅР°СЂРёСЃСѓРµС‚ СЃРµСЂСѓСЋ СЂР°РјРѕС‡РєСѓ РІРѕРєСЂСѓРі Р·Р°РіРѕР»РѕРІРєР° РєРѕРґР°.
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 \lstset{ %
-language=C, % выбор языка для подсветки (здесь это С)
-basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
-numbers=left, % где поставить нумерацию строк (слева\справа)
-%numberstyle=\tiny, % размер шрифта для номеров строк
-stepnumber=1, % размер шага между двумя номерами строк
-numbersep=5pt, % как далеко отстоят номера строк от подсвечиваемого кода
-backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
-showspaces=false, % показывать или нет пробелы специальными отступами
-showstringspaces=false, % показывать или нет пробелы в строках
-showtabs=false, % показывать или нет табуляцию в строках
-frame=single, % рисовать рамку вокруг кода
-tabsize=2, % размер табуляции по умолчанию равен 2 пробелам
-captionpos=t, % позиция заголовка вверху [t] или внизу [b]
-breaklines=true, % автоматически переносить строки (да\нет)
-breakatwhitespace=false, % переносить строки только если есть пробел
-escapeinside={\%*}{*)} % если нужно добавить комментарии в коде
+language=C, % РІС‹Р±РѕСЂ СЏР·С‹РєР° РґР»СЏ РїРѕРґСЃРІРµС‚РєРё (Р·РґРµСЃСЊ СЌС‚Рѕ РЎ)
+basicstyle=\small\sffamily, % СЂР°Р·РјРµСЂ Рё РЅР°С‡РµСЂС‚Р°РЅРёРµ С€СЂРёС„С‚Р° РґР»СЏ РїРѕРґСЃРІРµС‚РєРё РєРѕРґР°
+numbers=left, % РіРґРµ РїРѕСЃС‚Р°РІРёС‚СЊ РЅСѓРјРµСЂР°С†РёСЋ СЃС‚СЂРѕРє (СЃР»РµРІР°\СЃРїСЂР°РІР°)
+%numberstyle=\tiny, % СЂР°Р·РјРµСЂ С€СЂРёС„С‚Р° РґР»СЏ РЅРѕРјРµСЂРѕРІ СЃС‚СЂРѕРє
+stepnumber=1, % СЂР°Р·РјРµСЂ С€Р°РіР° РјРµР¶РґСѓ РґРІСѓРјСЏ РЅРѕРјРµСЂР°РјРё СЃС‚СЂРѕРє
+numbersep=5pt, % РєР°Рє РґР°Р»РµРєРѕ РѕС‚СЃС‚РѕСЏС‚ РЅРѕРјРµСЂР° СЃС‚СЂРѕРє РѕС‚ РїРѕРґСЃРІРµС‡РёРІР°РµРјРѕРіРѕ РєРѕРґР°
+backgroundcolor=\color{white}, % С†РІРµС‚ С„РѕРЅР° РїРѕРґСЃРІРµС‚РєРё - РёСЃРїРѕР»СЊР·СѓРµРј \usepackage{color}
+showspaces=false, % РїРѕРєР°Р·С‹РІР°С‚СЊ РёР»Рё РЅРµС‚ РїСЂРѕР±РµР»С‹ СЃРїРµС†РёР°Р»СЊРЅС‹РјРё РѕС‚СЃС‚СѓРїР°РјРё
+showstringspaces=false, % РїРѕРєР°Р·С‹РІР°С‚СЊ РёР»Рё РЅРµС‚ РїСЂРѕР±РµР»С‹ РІ СЃС‚СЂРѕРєР°С…
+showtabs=false, % РїРѕРєР°Р·С‹РІР°С‚СЊ РёР»Рё РЅРµС‚ С‚Р°Р±СѓР»СЏС†РёСЋ РІ СЃС‚СЂРѕРєР°С…
+frame=single, % СЂРёСЃРѕРІР°С‚СЊ СЂР°РјРєСѓ РІРѕРєСЂСѓРі РєРѕРґР°
+tabsize=2, % СЂР°Р·РјРµСЂ С‚Р°Р±СѓР»СЏС†РёРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЂР°РІРµРЅ 2 РїСЂРѕР±РµР»Р°Рј
+captionpos=t, % РїРѕР·РёС†РёСЏ Р·Р°РіРѕР»РѕРІРєР° РІРІРµСЂС…Сѓ [t] РёР»Рё РІРЅРёР·Сѓ [b]
+breaklines=true, % Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РїРµСЂРµРЅРѕСЃРёС‚СЊ СЃС‚СЂРѕРєРё (РґР°\РЅРµС‚)
+breakatwhitespace=false, % РїРµСЂРµРЅРѕСЃРёС‚СЊ СЃС‚СЂРѕРєРё С‚РѕР»СЊРєРѕ РµСЃР»Рё РµСЃС‚СЊ РїСЂРѕР±РµР»
+escapeinside={\%*}{*)} % РµСЃР»Рё РЅСѓР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё РІ РєРѕРґРµ
 }
 
-% Меняем везде перечисления на цифра.цифра
+% РњРµРЅСЏРµРј РІРµР·РґРµ РїРµСЂРµС‡РёСЃР»РµРЅРёСЏ РЅР° С†РёС„СЂР°.С†РёС„СЂР°
 \renewcommand{\theenumi}{\arabic{enumi}}
 \renewcommand{\labelenumi}{\arabic{enumi}}
 \renewcommand{\theenumii}{\arabic{enumii}}
@@ -71,11 +74,10 @@ escapeinside={\%*}{*)} % если нужно добавить комментарии в коде
 % \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.}
 \renewcommand{\thesubsubsection}{\arabic{subsection}.\arabic{subsubsection}.}
 
-\usepackage{hyperref}
-\usepackage{multirow}
+\newtheorem{theorem}{Theorem}
 
 \begin{document}
-\def\figurename{Figure} % префикс к рисунками
+\def\figurename{Figure} % РїСЂРµС„РёРєСЃ Рє СЂРёСЃСѓРЅРєР°РјРё
 \def\tablename{Table}
 \input{lab_03_title}
 % \tableofcontents
