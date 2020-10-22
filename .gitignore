@@ -1,6 +1,10 @@
 # lab_01
 lab_01/dumps/
 
+# LaTex
+*.pdf
+*synctex.gz
+
 # PyCharm
 .run/
 .idea/

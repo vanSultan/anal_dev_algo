@@ -1,0 +1,4 @@
+Nelder-Mead ((a, b, c, d), iter, f_c): (-1.005, 1.006, -2.001, 1.001), 480, 795
+Levenberg-Marquardt ((a, b, c, d), iter, f_c): (0.000, -0.000, 1.000, 1.000), nan, 3
+Simulated Annealing ((a, b, c, d), iter, f_c): (-1.005, 1.006, -2.001, 1.001), 1000, 9111
+Differential Evolution ((a, b, c, d), iter, f_c): (-0.999, 0.999, -2.001, 1.001), 149, 9105

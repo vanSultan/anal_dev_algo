@@ -1,0 +1,52 @@
+[fun_1]: x^3, [0, 1]
+Cnt of func eval: 1000
+Cnt of iteration: 1000
+exhaustive_search (x, f): 0.000, 0.000
+Cnt of func eval: 22
+Cnt of iteration: 11
+dichotomy_method  (x, f): 0.000, 0.000
+Cnt of func eval: 17
+Cnt of iteration: 15
+golden_section    (x, f): 0.000, 0.000
+[fun_2]: |x - 0.2|, [0, 1]
+Cnt of func eval: 1000
+Cnt of iteration: 1000
+exhaustive_search (x, f): 0.200, 0.000
+Cnt of func eval: 22
+Cnt of iteration: 11
+dichotomy_method  (x, f): 0.200, 0.000
+Cnt of func eval: 17
+Cnt of iteration: 15
+golden_section    (x, f): 0.200, 0.000
+[fun_3]: x*sin(1/x), [0.1, 1]
+Cnt of func eval: 900
+Cnt of iteration: 900
+exhaustive_search (x, f): 0.100, 0.001
+Cnt of func eval: 20
+Cnt of iteration: 10
+dichotomy_method  (x, f): 0.100, 0.001
+Cnt of func eval: 17
+Cnt of iteration: 15
+golden_section    (x, f): 0.100, 0.001
+Linear approximation
+Cnt of func eval: 5448000
+Cnt of iteration: 5448000
+exhaustive_search_2d ((a, b), f): (0.528, 0.622), 12
+Cnt of func eval: 77376
+Cnt of iteration: 77376
+gauss_method ((a, b), f): (0.546, 0.613), 112.37535029680845
+Cnt of func eval: 18
+Cnt of iteration: 3
+nelder_mead ((a, b), f): (0.613, 0.613), 112.53809572684348
+Rational approximation
+Cnt of func eval: 5448000
+Cnt of iteration: 5448000
+exhaustive_search_2d ((a, b), f): (0.684, -0.421), 12
+Cnt of func eval: 6448
+Cnt of iteration: 6448
+gauss_method ((a, b), f): (0.000, -1.837), 194.14499672740956
+Cnt of func eval: 10
+Cnt of iteration: 2
+nelder_mead ((a, b), f): (1.000, 0.000), 116.0748262936055
+
+Process finished with exit code 0

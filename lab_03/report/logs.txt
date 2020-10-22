@@ -1,0 +1,10 @@
+Linear approximation
+gradient_descent ((a, b), iter, f_c, df_c): (0.357, -0.070), 201, 201, 201
+conjugate_gradient_descent ((a, b), iter, f_c, df_c): (0.375, -0.079), 2, 15, 5
+newton ((a, b), iter, f_c, df_c): (0.375, -0.079), 2, 15, 5
+levenberg_marquardt ((a, b), iter, f_c, df_c): (0.375, -0.079), 2, 15, 5
+Rational approximation
+gradient_descent ((a, b), iter, f_c, df_c): (0.107, -0.037), 201, 201, 201
+conjugate_gradient_descent ((a, b), iter, f_c, df_c): (0.066, -0.747), 14, 114, 38
+newton ((a, b), iter, f_c, df_c): (0.066, -0.747), 14, 114, 38
+levenberg_marquardt ((a, b), iter, f_c, df_c): (0.066, -0.747), 14, 114, 38
