@@ -114,10 +114,26 @@ Note that both metaheuristic methods produced extremely similar results for diff
 \label{tbl:stohmeta}
 \end{table}
 
+\paragraph{Levenberg-Marquardt algorithm gives poor results}
+
+\begin{theorem}
+    \label{theorem:conv_newton}
+    For doubly continuously differentiable functions (i.e.\ for $f \in C^2(D)$) with a non-degenerate matrix $\nabla^2 f(y^*)$, there exists a $\varepsilon$-neighborhood of the stationary point $y^*$ of the function $f(y)$ such that for any initial point $y^0$ from this neighborhood, the Newton method will converge superlinearly, and if the Lipschitz condition is met in this neighborhood for Hesse matrices, it will converge quadratically.
+\end{theorem}
+
+Since the Levenberg-Marquardt algorithm is a hybrid of gradient descent and the Newton method, it therefore has the disadvantages of the Newton method.
+Based on the theorem above [1], we can conclude that if the Hesse matrix is not degenerate, but not sign-positive, then the Newton method can converge to a stationary point that is not a minimum point, but a maximum point or a saddle point.
+Accordingly, a more careful choice of initial approximations is necessary.
+
 \subsection{Conclusion}\label{subsec:conclusion}
 
 In the course of the laboratory work, stochastic and metaheuristic algorithms were implemented and analyzed within the problem of the unconstrained optimization problem.
 This paper also provides a comparative analysis of stochastic and metaheuristic algorithms.
+
+\subsection{References}\label{subsec:references}
+\begin{enumerate}[label={[\arabic*]}]
+    \item С.Ю. Городецкий, Лабораторный практикум по методам локальной оптимизации в программной системе LocOpt, 2007.
+\end{enumerate}
 
 \subsection{Appendix}\label{subsec:appendix}
 
