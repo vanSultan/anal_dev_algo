@@ -1,0 +1,81 @@
+\newpage
+\subsection{Goal}\label{subsec:goal}
+
+The use of path search algorithms on weighted graphs (Dijkstra's, A* and Bellman-Ford algorithms)
+
+\subsection{Formulation of the problem}\label{subsec:formulation-of-the-problem}
+
+\paragraph{I.} Generate a random adjacency matrix for a simple undirected weighted graph of 100 vertices and 500 edges with assigned random positive integer weights (note that the matrix should be symmetric and contain only 0s and weights as elements).
+Use Dijkstra's and Bellman-Ford algorithms to find shortest paths between a random starting vertex and other vertices.
+Measure the time required to find the paths for each algorithm.
+Repeat the experiment 10 times for the same starting vertex and calculate the average time required for the paths search of each algorithm.
+Analyse the results obtained.
+
+\paragraph{II.} Generate a $10\times 10$ cell grid with 30 obstacle cells.
+Choose two random non-obstacle cells and find a shortest path between them using A* algorithm.
+Repeat the experiment 5 times with different random pair of cells.
+Analyse the results obtained
+
+\paragraph{III.} Describe the data structures and design techniques used within the algorithms.
+
+\subsection{Brief theoretical part}\label{subsec:brief-theoretical-part}
+
+A graph with no loops and no parallel edges is called a \textit{simple graph}.
+
+\textit{Undirected graph} it is $G = (V, E)$, consisting of the set $V$ of nodes and the set $E$ of edges, which are unordered pairs of elements of $V$.
+
+If edges in your graph have weights then your graph is said to be a \textit{weighted graph}, if the edges do not have weights, the graph is said to be \textit{unweighted}.
+
+\textit{Dijkstra's Algorithm} (DA) is an algorithm for computing the shortest path between two vertices of a graph where all edges have nonnegative weight.
+It is based on repeatedly expanding the closest vertex which has not yet been reached.
+The complexity of the algorithm is estimated from $O(\lvert V \rvert \log{\lvert V \rvert})$ to $O(\lvert V \rvert^2)$, depending on the modification used.
+This algorithm belongs to the class of greedy algorithms
+
+The \textit{Bellman-Ford algorithm} (BFA) is an algorithm for computing the shortest path between two points in a weighted graph.
+Unlike with \textit{Dijkstra's algorithm}, the edge weights are allowed to be negative.
+On the down side, it has a larger running time, $O(\lvert V \rvert \lvert E \rvert)$.
+This algorithm is related to Dynamic Programming Problems.
+
+\textit{A*} search is a search algorithm which makes use of a heuristic which estimates the distance from a node to a goal state.
+It iteratively expands nodes in order by their path cost plus their heuristic value.
+If the heuristic satisfies certain "admissibility" conditions, then \textit{A*} is guaranteed to find an optimal path.
+The time complexity of the algorithm is $O(\lvert E \rvert)$.
+note that the algorithm \textit{A*} yields \textit{DA} if the heuristic is omitted.
+This algorithm belongs to the class of greedy algorithms
+
+\subsection{Results}\label{subsec:results}
+
+Empirical comparison of the running time of algorithms \textit{DA} and \textit{BFA}:
+
+\begin{verbatim}
+    Dijkstra: 0.232 | Bellman-Ford: 0.843 | ration: 3.638
+\end{verbatim}
+
+\textit{Dijkstra's algorithm} is better when it comes to reducing the time complexity.
+However, when we have negative weights, we have to go with the \textit{Bellman-Ford algorithm}.
+Also, if we want to know whether the graph contains negative cycles or not, the \textit{Bellman-Ford algorithm} can help us with that.
+
+Just one thing to remember, in case of negative weights or even negative cycles, the \textit{Bellman-Ford algorithm} can only help us with directed graphs.
+
+The Figure~\ref{ris:plot} shows examples of the A* algorithm for finding the shortest distance for different pairs of vertices:
+
+\begin{figure}[H]
+    \center
+    \includegraphics[width=\textwidth]{img/plot.png}
+    \caption{Example of A* algorithm.}
+    \label{ris:plot}
+\end{figure}
+
+If the heuristic gives an estimate of the shortest path from below (such a heuristic is called "acceptable"), then the A* search algorithm finds the shortest path.
+In particular, the heuristic can always return 0.
+in this case, the A* algorithm will be equivalent to the Dijkstra algorithm with a stop when the target vertex is reached.
+
+If there is at least one path between the specified vertices in the graph, the A* algorithm always finds some path (regardless of the properties of the heuristic), since it is a generalization of the breadth-first search algorithm.
+
+\subsection{Conclusion}\label{subsec:conclusion}
+
+In this task, we applied and analyzed path-finding algorithms on weighted graphs (Dijkstra's algorithm, A*, and the Bellman-Ford algorithm).
+
+\subsection{Appendix}\label{subsec:appendix}
+
+The source code is located \href{https://github.com/vanSultan/anal_dev_algo/tree/lab_06}{here}: \url{https://github.com/vanSultan/anal_dev_algo/tree/lab_06}.
