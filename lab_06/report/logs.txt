@@ -1,0 +1,1 @@
+Dijkstra: 0.232 | Bellman-Ford: 0.843 | div: 3.638
